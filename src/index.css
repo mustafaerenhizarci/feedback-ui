@@ -16,12 +16,9 @@ body {
 }
 
 body {
-  width: 100vw;
   background-color: #4a148c;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  
+  
 }
 
 h1,
@@ -49,9 +46,10 @@ h3 {
 
 
 .feedback-list {
-  width: 60%;
-  margin: 10rem auto;
+  width: 50%;
+  margin: 0 auto;
   list-style: none;
+  padding: 1% 0;
 }
 
 .stats {
@@ -76,7 +74,7 @@ h3 {
   max-width: 100%;
   background-color: #eee;
   border-radius: 10px;
-  padding: 2% 5%;
+  padding: 2% 3%;
   margin: 3rem auto;
   position: relative;
 }
@@ -86,7 +84,7 @@ h3 {
   position: absolute;
   top: -0.5rem;
   left: -0.5rem;
-  border: 1px solid #fff;
+  border: 3px solid #fff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -103,28 +101,38 @@ h3 {
 
 .feedback-item p {
   font-size: 1rem;
-  margin: 2% 7;
+  padding: 2% 5%;
+}
+
+.delete {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border:0;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 10px;
 }
 
 
 /* Feedback Form */
 
 .feedback-form {
-  width: 80%;
+  width: 50%;
   border-radius: 10px;
   background-color: #fff;
-  padding: 2% 0;
-  margin: 2% auto;
+  padding: 2% 1%;
+  margin: 1% auto;
 }
 
 .form-list {
   list-style: none;
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-self: center;
-  margin: 2% auto;
+  margin: 3% auto;
 }
 
 .form-list li {
@@ -163,8 +171,9 @@ input[type="radio"]:checked ~ label {
 }
 
 .input-group {
-  width: 60%;
-  margin:0 auto;
+  width: 70%;
+  height: 6rem;
+  margin:2% auto;
   border-radius: 10px;
   border:1px solid darkslategray;
   display: flex;
@@ -175,7 +184,7 @@ input[type="radio"]:checked ~ label {
 .input-group input {
   text-align: left;
   width: 70%;
-  height: 3rem;
+  height: 2rem;
   font-size: 1.3rem;
   padding: 2% 3%;
   outline: none;
@@ -187,7 +196,7 @@ input[type="radio"]:checked ~ label {
 .input-group button {
   width: 20%;
   height: 50px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   background-color: lightgray;
   outline: none;
   border-radius: 10px;
@@ -198,7 +207,33 @@ input[type="radio"]:checked ~ label {
   cursor: pointer;
 }
 
+.input-group button:disabled:hover {
+  border:0;
+  background-color: lightgray;
+  cursor: not-allowed;
+}
+
 .input-group button:hover {
   border:3px solid darkslategray;
   background-color: transparent;
+}
+
+.info {
+  padding: 1% 2%;
+  margin:2% auto;
+}
+
+.info p {
+  color: #0D47A1;
+  font-size: 1.3rem;
+}
+
+@media screen and (max-width:1000px) {
+  .feedback-form {
+    width: 80%;
+  }
+
+  .feedback-list {
+    width: 80%;
+  }
 }
