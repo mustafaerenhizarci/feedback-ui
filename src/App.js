@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { nanoid } from "nanoid";
 import starter from "./starter";
 
@@ -6,6 +7,8 @@ import starter from "./starter";
 import Header from "./components/shared/Header";
 import FeedbackList from "./components/FeedbackList";
 import FeedbackForm from "./components/FeedbackForm";
+import AboutIcon from "./components/AboutIcon";
+import AboutPage from "./components/pages/AboutPage";
 
 export default function App() {
   const [feedbacks, setFeedbacks] = useState(starter);
@@ -15,7 +18,9 @@ export default function App() {
   function handleSubmit(e) {
     e.preventDefault();
     setFeedbacks((prev) => {
-      return (prev) ? [{ id:nanoid(5), rating: rating, text: inputValue },...prev] : [{ id: nanoid(5), rating: rating, text: inputValue }] 
+      return prev
+        ? [{ id: nanoid(5), rating: rating, text: inputValue }, ...prev]
+        : [{ id: nanoid(5), rating: rating, text: inputValue }];
     });
 
     setInputValue("");
@@ -29,16 +34,33 @@ export default function App() {
 
   return (
     <>
-      <div className="header">
-        <Header size={1} color={"#fff"} text="Feedback UI" />
-      </div>
-      <FeedbackForm
-        setRating={setRating}
-        handleSubmit={handleSubmit}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-      />
-      <FeedbackList handleDelete={handleDelete} feedbacks={feedbacks} />
+      <Router>
+        <div className="header">
+          <Header size={1} color={"#fff"} text="Feedback UI" />
+        </div>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <>
+                <FeedbackForm
+                  setRating={setRating}
+                  handleSubmit={handleSubmit}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                />
+                <FeedbackList
+                  handleDelete={handleDelete}
+                  feedbacks={feedbacks}
+                />
+                <AboutIcon/>
+              </>
+            }
+          ></Route>
+          <Route exact path="/home" element={<AboutPage/>}></Route>
+        </Routes>
+      </Router>
     </>
   );
 }

@@ -41,9 +41,33 @@ h3 {
   padding: 1% 0;
 }
 
+/* About Page */
+
+.about-icon {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+
+.about {
+  background-color: #fff;
+  border-radius: 10px;
+  width: max-content;
+  max-width: 80%;
+  margin: 2% auto;
+  padding: 0.5% 2%;
+}
+
+.about p {
+  text-align: left;
+  margin:3% 0;
+}
+
+
+
+
+
 /* Feedback Styles */
-
-
 
 .feedback-list {
   width: 50%;
