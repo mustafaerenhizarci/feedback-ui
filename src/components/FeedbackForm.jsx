@@ -1,32 +1,27 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Header from "./shared/Header";
+import FeedbackContext from "./context/FeedbackContext";
 
+export default function FeedbackForm() {
+  const { setRating, inputValue, setInputValue, handleSubmit } =
+    useContext(FeedbackContext);
 
-export default function FeedbackForm({
-  setRating,
-  inputValue,
-  setInputValue,
-  handleSubmit,
-}) {
-
-  const [info,setInfo] = useState("");
+  const [info, setInfo] = useState("");
 
   const handleRating = (e) => {
     setRating(+e.target.id);
   };
 
-  const handleChange = (e)=> {
-    const currentValue = e.target.value
+  const handleChange = (e) => {
+    const currentValue = e.target.value;
     setInputValue(currentValue);
 
     if (currentValue !== "" && currentValue.trim().length < 10) {
-      setInfo("Text must be at least 10 characters")
+      setInfo("Text must be at least 10 characters");
     } else {
       setInfo("");
     }
-
-
-  }
+  };
 
   return (
     <>
@@ -89,7 +84,9 @@ export default function FeedbackForm({
             type="text"
             placeholder="Write a review"
           />
-          <button disabled={(inputValue.length > 10) ? false : true} type="submit">Send</button>
+          <button disabled={inputValue.length <= 10} type="submit">
+            Send
+          </button>
         </div>
         <div className="info">
           <p>{info}</p>
