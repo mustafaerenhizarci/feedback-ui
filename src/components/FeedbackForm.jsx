@@ -12,7 +12,7 @@ export default function FeedbackForm() {
       setInputValue(edit.item.text);
       setRating(edit.item.rating);
     }
-  }, [edit]);
+  }, [edit, setInputValue, setRating]);
 
   const inputRef = useRef(null);
   const [info, setInfo] = useState("");
