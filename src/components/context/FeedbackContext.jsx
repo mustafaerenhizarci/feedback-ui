@@ -1,68 +1,94 @@
-import { useState, createContext } from "react";
-import starters from "../../starter";
+import { useState, createContext, useEffect } from "react";
+
 import { nanoid } from "nanoid";
 
 const FeedbackContext = createContext({});
 
 export function FeedbackProvider({ children }) {
-  const [feedbacks, setFeedbacks] = useState(starters);
+  const [isLoading, setIsLoading] = useState(true);
+  const [feedbacks, setFeedbacks] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [rating, setRating] = useState(10);
-
   const [edit, setEdit] = useState({
     item: {},
     mode: false,
   });
 
-  function updateFeedback(newFeedback) {
+  useEffect(() => {
+    fetchFeedbacks();
+    setIsLoading(false);
+  }, []);
+
+  async function fetchFeedbacks() {
+    const response = await fetch("/feedbacks?");
+    const data = await response.json();
+    setFeedbacks(data);
+    return 0;
+  }
+
+  async function updateFeedback(newFeedback) {
     const id = newFeedback.id;
+    const response = await fetch("/feedbacks/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: nanoid(5), rating: rating, text: inputValue }),
+    });
+
+    const data = await response.json();
+
     setFeedbacks(
       feedbacks.map((item) => {
-        return item.id === id
-          ? { id: newFeedback.id, rating: rating, text: inputValue }
-          : item;
+        return item.id === id ? data : item;
       })
     );
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (edit.mode) {
-      updateFeedback(edit.item);
+      await updateFeedback(edit.item);
       setEdit({
         item: {},
         mode: false,
       });
     } else {
-      setFeedbacks((prev) => {
-        return prev
-          ? [{ id: nanoid(5), rating: rating, text: inputValue }, ...prev]
-          : [
-              {
-                id: nanoid(5),
-                rating: rating,
-                text: inputValue,
-              },
-            ];
+      const response = await fetch("/feedbacks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: nanoid(5),
+          rating: rating,
+          text: inputValue,
+        }),
       });
+      const data = await response.json();
+      setFeedbacks([data, ...feedbacks]);
     }
 
     setInputValue("");
     setRating(10);
   }
 
-  function handleDelete(e) {
+  async function handleDelete(e) {
     let confirm = window.confirm("Are you sure to delete feedback?");
 
     if (confirm) {
       const id = e.currentTarget.id;
-      setFeedbacks((prev) => prev.filter((item) => item.id !== id));
+
+      await fetch("/feedbacks/" + id, { method: "DELETE" });
+      setFeedbacks(feedbacks);
+
+      setFeedbacks(feedbacks.filter((item) => item.id !== id));
     }
   }
 
   return (
     <FeedbackContext.Provider
       value={{
+        isLoading,
+        setIsLoading,
         feedbacks,
         setFeedbacks,
         inputValue,

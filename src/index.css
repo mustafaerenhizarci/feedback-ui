@@ -32,6 +32,11 @@ h3 {
     width: 100%;
 }
 
+.loader {
+    width: 150px;
+    margin: auto;
+}
+
 /* Header */
 
 .header {
