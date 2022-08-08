@@ -52,8 +52,12 @@ export function FeedbackProvider({ children }) {
   }
 
   function handleDelete(e) {
-    const id = e.currentTarget.id;
-    setFeedbacks((prev) => prev.filter((item) => item.id !== id));
+    let confirm = window.confirm("Are you sure to delete feedback?");
+
+    if (confirm) {
+      const id = e.currentTarget.id;
+      setFeedbacks((prev) => prev.filter((item) => item.id !== id));
+    }
   }
 
   return (
