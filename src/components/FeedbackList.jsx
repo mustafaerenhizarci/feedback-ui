@@ -25,6 +25,7 @@ export default function FeedbackList() {
         <h2>Average Rating: {average}</h2>
       </div>
       <AnimatePresence>
+        <p className="app-info">This application uses local fake json server so it can't run on vercel.</p>
         {feedbacks.map((feedback) => (
           <motion.div
             key={feedback.id}

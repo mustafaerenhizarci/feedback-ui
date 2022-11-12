@@ -273,3 +273,14 @@ input[type="radio"]:checked ~ label {
         width: 80%;
     }
 }
+
+
+.app-info {
+    background-color: #E0144C;
+    padding:15px;
+    border-radius: 10px;
+    margin:30px 0;
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'Ubuntu';
+}
